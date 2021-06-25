@@ -13,6 +13,9 @@ buyer_list2 = []
 link_list2 = []
 img_list2 = []
 
+top3_2 = []
+top3_1 = []
+
 def main_start(word):
     print("크롤링 1 시작")
     my_function_man(word)
@@ -26,15 +29,18 @@ def save_2_txt(name, title, buyer, link, img):
 
     for i in range(len(buyer_list)):
         b = buyer_list[i]
-        B = b[-1:]
-        if B == "만":
-            c = b.rstrip(B)
-            buyer_list[i] = c
 
         B = b[:3]
         if B == "조회수":
             c = b.lstrip(B)
             buyer_list[i] = c
+
+    for i in range(len(buyer_list2)):
+        b = buyer_list2[i]
+        B = b[-1:]
+        if B == "명":
+            c = b.rstrip(B)
+            buyer_list2[i] = c
 
     title = [string + "\n" for string in title]
     buyer = [string + "\n" for string in buyer]
@@ -132,6 +138,93 @@ def my_function_hae(word):
     save_2_txt("file2", title_list2, buyer_list2, link_list2, img_list2)
 
     print("내용2 저장 완료\n")
+
+
+def sorting():
+    first = -1
+    second = -1
+    third = -1
+
+    big = -1
+    for i in range(len(buyer_list2)):
+        if int(buyer_list2[i]) > big:
+            big = int(buyer_list2[i])
+            first = i
+
+    top3_2.append(first)
+    big = -1
+    for i in range(len(buyer_list2)):
+        if i == first:
+            continue
+
+        if int(buyer_list2[i]) > big:
+            big = int(buyer_list2[i])
+            second = i
+
+    top3_2.append(second)
+    big = -1
+    for i in range(len(buyer_list2)):
+        if i == first or i == second:
+            continue
+
+        if int(buyer_list2[i]) > big:
+            big = int(buyer_list2[i])
+            third = i
+
+    top3_2.append(third)
+
+    print(top3_2)
+
+def sorting2():
+    first = -1
+    second = -1
+    third = -1
+
+    big = -1
+    for i in range(len(buyer_list)):
+        buyer_list[i] = buyer_list[i].replace(',', '')
+
+    for i in range(len(buyer_list)):
+        b = buyer_list[i]
+        B2 = b[:3]
+        if B2 == "조회수":
+            c = b.lstrip(B2)
+            buyer_list[i] = c
+        B2 = b[-1:]
+        if B2 == "만":
+            c = b.rstrip(B2)
+            x = float(c) * 10000
+            buyer_list[i] = str(int(x))
+
+    for i in range(len(buyer_list)):
+        if int(buyer_list[i]) > big:
+            big = int(buyer_list[i])
+            first = i
+
+    top3_1.append(first)
+    big = -1
+    for i in range(len(buyer_list)):
+        if i == first:
+            continue
+
+        if int(buyer_list[i]) > big:
+            big = int(buyer_list[i])
+            second = i
+
+    top3_1.append(second)
+    big = -1
+    for i in range(len(buyer_list)):
+        if i == first or i == second:
+            continue
+
+        if int(buyer_list[i]) > big:
+            big = int(buyer_list[i])
+            third = i
+
+    top3_1.append(third)
+
+    print(top3_1)
+
 
 
 if __name__ == '__main__':
