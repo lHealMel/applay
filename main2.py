@@ -6,11 +6,12 @@ import requests
 
 def main():
     word = input("단어를 입력하세요: ")
+    print("크롤링 1 시작")
     my_function_man(word)
-    print("크롤링 1 완료")
+    print("-----------------------------------")
+    print("크롤링 2 시작")
     my_function_hae(word)
-    print("크롤링 2 완료")
-    print("크롤링 전체 완료")
+    print("전체 완료")
 
 
 # 만개의 레시피에서 크롤링
@@ -52,6 +53,8 @@ def my_function_man(word):
         # Tag안의 src
         img_list.append(recipe['src'])
 
+    print("크롤링 1 완료")
+
     title_list = [string + "\n" for string in title_list]
     link_list = [string + "\n" for string in link_list]
     buyer_list = [string + "\n" for string in buyer_list]
@@ -63,6 +66,8 @@ def my_function_man(word):
         r_file.write(buyer_list[i])
         r_file.write('\n')
     r_file.close()
+
+    print("내용1 저장 완료\n")
 
 
 # 해먹에서 크롤링
@@ -103,6 +108,8 @@ def my_function_hae(word):
         # Tag안의 src
         img_list2.append(recipe['src'])
 
+    print("크롤링 2 완료")
+
     title_list2 = [string + "\n" for string in title_list2]
     link_list2 = [string + "\n" for string in link_list2]
     buyer_list2 = [string + "\n" for string in buyer_list2]
@@ -114,6 +121,8 @@ def my_function_hae(word):
         r_file.write(buyer_list2[i])
         r_file.write('\n')
     r_file.close()
+
+    print("내용2 저장 완료\n")
 
 
 if __name__ == '__main__':
