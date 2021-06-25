@@ -1,6 +1,5 @@
 from selenium import webdriver
 from bs4 import BeautifulSoup as bs
-import os
 
 # selenium 안쓰고 그냥 urllib쓰는 버전도 만들어보기
 
@@ -30,9 +29,6 @@ def my_function():
         # Tag안의 href
         print(recipe['href'])
         # href는 앞부분(https://www.10000recipe.com)이 생략되어 나옴
-
-    os.system("pause")
-
 
 if __name__ == '__main__':
     my_function()
