@@ -3,15 +3,54 @@
 from bs4 import BeautifulSoup as bs
 import requests
 
+title_list = []
+buyer_list = []
+link_list = []
+img_list = []
 
-def main():
-    word = input("단어를 입력하세요: ")
+title_list2 = []
+buyer_list2 = []
+link_list2 = []
+img_list2 = []
+
+def main_start(word):
     print("크롤링 1 시작")
     my_function_man(word)
     print("-----------------------------------")
     print("크롤링 2 시작")
     my_function_hae(word)
     print("전체 완료")
+
+
+def save_2_txt(name, title, buyer, link, img):
+
+    for i in range(len(buyer_list)):
+        b = buyer_list[i]
+        B = b[-1:]
+        if B == "만":
+            c = b.rstrip(B)
+            buyer_list[i] = c
+
+        B = b[:3]
+        if B == "조회수":
+            c = b.lstrip(B)
+            buyer_list[i] = c
+
+    title = [string + "\n" for string in title]
+    buyer = [string + "\n" for string in buyer]
+    link = [string + "\n" for string in link]
+    img = [string + "\n" for string in img]
+
+    r_file = open(name+".txt", "a", encoding='utf-8')
+    try:
+        for i in range(len(title)):
+            r_file.write(title[i])
+            r_file.write(link[i])
+            r_file.write(buyer[i])
+            r_file.write(img[i])
+            r_file.write("\n")
+    finally:
+        r_file.close()
 
 
 # 만개의 레시피에서 크롤링
@@ -22,11 +61,6 @@ def my_function_man(word):
     response.encoding = 'utf-8'
     html = response.text
     soup = bs(html, 'html.parser')
-
-    title_list = []
-    buyer_list = []
-    link_list = []
-    img_list = []
 
     # 제목 추출
     my_recipe_title = soup.find('ul', {'class': 'common_sp_list_ul ea4'}).find_all("div", {'class': 'common_sp_caption_tit line2'})
@@ -55,17 +89,7 @@ def my_function_man(word):
 
     print("크롤링 1 완료")
 
-    title_list = [string + "\n" for string in title_list]
-    link_list = [string + "\n" for string in link_list]
-    buyer_list = [string + "\n" for string in buyer_list]
-
-    r_file = open("테스트.txt", "a", encoding='utf-8')
-    for i in range(len(title_list)):
-        r_file.write(title_list[i])
-        r_file.write(link_list[i])
-        r_file.write(buyer_list[i])
-        r_file.write('\n')
-    r_file.close()
+    save_2_txt("file1", title_list, buyer_list, link_list, img_list)
 
     print("내용1 저장 완료\n")
 
@@ -77,11 +101,6 @@ def my_function_hae(word):
     response = requests.get(url)
     html = response.text
     soup = bs(html, 'html.parser')
-
-    title_list2 = []
-    buyer_list2 = []
-    link_list2 = []
-    img_list2 = []
 
     # 제목 추출
     my_recipe_title = soup.find('ul', {'class': 'lst_recipe'}).select('a > strong')
@@ -110,20 +129,10 @@ def my_function_hae(word):
 
     print("크롤링 2 완료")
 
-    title_list2 = [string + "\n" for string in title_list2]
-    link_list2 = [string + "\n" for string in link_list2]
-    buyer_list2 = [string + "\n" for string in buyer_list2]
-
-    r_file = open("테스트2.txt", "a", encoding='utf-8')
-    for i in range(len(title_list2)):
-        r_file.write(title_list2[i])
-        r_file.write(link_list2[i])
-        r_file.write(buyer_list2[i])
-        r_file.write('\n')
-    r_file.close()
+    save_2_txt("file2", title_list2, buyer_list2, link_list2, img_list2)
 
     print("내용2 저장 완료\n")
 
 
 if __name__ == '__main__':
-    main()
+    main_start()
