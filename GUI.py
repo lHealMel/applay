@@ -1,32 +1,35 @@
 from tkinter import *
 import main as mn
-import urllib.request
-import urllib.parse
-from PIL import Image, ImageTk
-import io
+import webbrowser
+
+
+
+
+def callback(url):
+    webbrowser.open_new(url)
 
 
 def search():
+    x1 = 100
+    y1 = 100
     print(input_text.get())
     mn.main_start(input_text.get())
-    name = ["frame1", "frame2", "frame3", "frame4", "frame5", "frame6"]
-    x1 = 200
-    y1 = 200
-    for i in range(0, 6):
+    name = ["frame1", "frame2", "frame3", "frame4", "frame5", "frame6", "frame7", "frame8", "frame9", "frame10"]
+    x = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
+    for i in range(0, 10):
         name[i] = Frame(window, width=300, height=300, relief="solid", bd=1)
-        name[i].place(x=x1, y=y1)
-        x1 += 320
-        if x1 >= 1000:
-            x1 = 200
-            y1 += 320
-    for i in range(0, 6):
-        images = []
-        raw_data = urllib.request.urlopen(mn.img_list[i]).read()
-        im = Image.open(io.BytesIO(raw_data))
-        image = ImageTk.PhotoImage(im)
-        label1 = Label(name[i], image=image, width=200, height=200).pack()
-        images.append(image)
+        name[i].place(x = x1, y = y1)
+        x1 += 650
+        if x1>1000:
+            x1 = 100
+            y1 += 150
 
+    for i in range(0, 10):
+        Label(name[i], text=mn.title_list[i]).pack(anchor = "center")
+        x[i] = Label(name[i], text="링크:" + "https://www.10000recipe.com" + mn.link_list[i], cursor="hand2", fg="blue")
+        x[i].pack(anchor="center")
+        x[i].bind("<Button-1>", lambda e: callback("https://www.10000recipe.com" + mn.link_list[i]))
+        Label(name[i], text="조회수" + mn.buyer_list[i]).pack(anchor="center")
 
 
 def del_1():
@@ -60,6 +63,7 @@ def del_2():
 
 
 window = Tk()
+window.title("Applay")
 window.geometry("1400x900+100+100")
 
 
