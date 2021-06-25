@@ -1,7 +1,7 @@
 from selenium import webdriver
 from bs4 import BeautifulSoup as bs
 
-# selenium 안쓰고 그냥 urllib쓰는 버전도 만들어보기
+# selenium ver
 
 def my_function():
     word = input("단어를 입력하세요: ")
